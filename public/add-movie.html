@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Add Movie</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <main>
+      <nav>
+        <a href="index.html">Home</a>
+        <a href="movies.html">Movies</a>
+        <a href="add-movie.html">Add Movie</a>
+      </nav>
+
+      <h1>Add a New Movie</h1>
+
+      <form action="/api/movies" method="POST">
+        <label for="title">Title</label>
+        <input id="title" type="text" name="title" required />
+
+        <label for="genre">Genre</label>
+        <input id="genre" type="text" name="genre" required />
+
+        <label for="description">Description</label>
+        <textarea id="description" name="description" required></textarea>
+
+        <label for="year">Year</label>
+        <input id="year" type="number" name="year" required />
+
+        <button type="submit">Add Movie</button>
+      </form>
+    </main>
+  </body>
+</html>
