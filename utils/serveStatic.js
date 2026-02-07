@@ -5,7 +5,6 @@ import { checkContentType } from "./checkContentType.js";
 
 export const serveStatic = async (req, res, dirname) => {
   const publicDir = path.join(dirname, "public");
-  console.log(publicDir);
 
   const filePath = path.join(
     publicDir,
@@ -15,7 +14,20 @@ export const serveStatic = async (req, res, dirname) => {
   const ext = path.extname(filePath);
   const contentType = checkContentType(ext);
 
-  const data = await fs.readFile(filePath, "utf8");
-
-  sendResponse(res, 200, contentType, data);
+  try {
+    const data = await fs.readFile(filePath);
+    sendResponse(res, 200, contentType, data);
+  } catch (error) {
+    if (error.code === "ENOENT") {
+      const content = await fs.readFile(path.join(publicDir, "404.html"));
+      sendResponse(res, 404, contentType, content);
+    } else {
+      sendResponse(
+        res,
+        500,
+        "text/html",
+        "<html><h1>Server Error: ${err.code}</h1></html>",
+      );
+    }
+  }
 };
